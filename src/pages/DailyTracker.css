@@ -1,0 +1,39 @@
+.daily-tracker-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.daily-tracker-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.daily-tracker-header span {
+  color: var(--text-color-light);
+  font-size: 1rem;
+}
+
+.habit-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.habit-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--card-background-color);
+  box-shadow: var(--box-shadow);
+  text-align: left;
+}
+
+.habit-button.completed {
+  background-color: var(--success-color);
+  color: white;
+  font-weight: 600;
+}
