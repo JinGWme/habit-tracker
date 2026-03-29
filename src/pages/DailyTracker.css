@@ -1,39 +1,71 @@
 .daily-tracker-header {
-  text-align: center;
-  margin-bottom: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .daily-tracker-header h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
 }
 
 .daily-tracker-header span {
-  color: var(--text-color-light);
-  font-size: 1rem;
+    color: var(--text-color-light);
+    font-size: 1rem;
+}
+
+.score-board {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.score-card {
+    background-color: var(--card-background-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.score-card span {
+    font-size: 0.9rem;
+    color: var(--text-color-light);
+    margin-bottom: 0.5rem;
+}
+
+.score-card strong {
+    font-size: 1.5rem;
+    color: var(--primary-color);
 }
 
 .habit-list {
-  display: grid;
-  gap: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
 }
 
 .habit-button {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 1.5rem;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: var(--border-radius);
-  background-color: var(--card-background-color);
-  box-shadow: var(--box-shadow);
-  text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--card-background-color);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    gap: 0.5rem;
 }
-
 .habit-button.completed {
-  background-color: var(--success-color);
-  color: white;
-  font-weight: 600;
+    background-color: var(--success-color);
+    color: white;
+    font-weight: 600;
 }

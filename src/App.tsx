@@ -7,6 +7,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import Layout from "./components/Layout";
 
+import Calendar from "./pages/Calendar";
+
 const router = createBrowserRouter([
   {
     path: "/auth",
@@ -24,8 +26,16 @@ const router = createBrowserRouter([
             element: <DailyTracker />,
           },
           {
+            path: "/day/:date",
+            element: <DailyTracker />,
+          },
+          {
             path: "/summary",
             element: <WeeklySummary />,
+          },
+          {
+            path: "/calendar",
+            element: <Calendar />,
           },
         ],
       },

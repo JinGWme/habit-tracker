@@ -1,20 +1,19 @@
 import { useHabitData } from "../hooks/useHabitData";
+import { HABITS } from "../constants/habits";
+import { getWeeklyScore } from "../utils/scoring";
 import "./WeeklySummary.css";
 
-const habits = [
-  { id: "lunch", name: "🍱 午饭 8 成饱" },
-  { id: "afternoon-snack", name: "🚫 下午不吃零食" },
-  { id: "dinner", name: "🍽️ 晚饭 8 成饱" },
-  { id: "evening-snack", name: "🚫 晚上不吃零食" },
-];
-
 function WeeklySummary() {
-  const { data } = useHabitData(new Date());
+  const currentDate = new Date();
+  const { data } = useHabitData(currentDate);
 
-  const summary = habits.map((habit) => {
+  const weeklyScore = getWeeklyScore(data, currentDate);
+
+  const summary = HABITS.map((habit) => {
     let count = 0;
+    // Calculate for the past 7 days including today
     for (let i = 0; i < 7; i++) {
-      const d = new Date();
+      const d = new Date(currentDate);
       d.setDate(d.getDate() - i);
       const dateString = d.toISOString().split("T")[0];
       if (data[dateString]?.[habit.id]) {
@@ -27,13 +26,17 @@ function WeeklySummary() {
   return (
     <div>
       <header className="weekly-summary-header">
-        <h2>每周总结</h2>
+        <h2>本周总结</h2>
+        <div className="weekly-score">
+          <span>本周累计积分: </span>
+          <strong>{weeklyScore}</strong>
+        </div>
       </header>
       <div className="summary-list">
         {summary.map((habit) => (
           <div key={habit.name} className="summary-card">
             <h3>{habit.name}</h3>
-            <p>本周已完成 {habit.count} / 7 次</p>
+            <p>最近 7 天已完成 {habit.count} / 7 次</p>
             <progress value={habit.count} max={7}></progress>
           </div>
         ))}

@@ -1,33 +1,46 @@
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useHabitData } from "../hooks/useHabitData";
 import { useSwipeable } from "react-swipeable";
+import { HABITS } from "../constants/habits";
+import { getDailyScore, getWeeklyScore } from "../utils/scoring";
 import "./DailyTracker.css";
 
-const habits = [
-  { id: "lunch", name: "🍱 午饭 8 成饱" },
-  { id: "afternoon-snack", name: "🚫 下午不吃零食" },
-  { id: "dinner", name: "🍽️ 晚饭 8 成饱" },
-  { id: "evening-snack", name: "🚫 晚上不吃零食" },
-];
-
 function DailyTracker() {
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const [currentDate, setCurrentDate] = useState(yesterday);
-  const { updateHabit, getHabitStatus } = useHabitData(currentDate);
+  const { date } = useParams<{ date: string }>();
+  const navigate = useNavigate();
+
+  let currentDate = new Date();
+  if (date) {
+    const [year, month, day] = date.split("-");
+    if (year && month && day) {
+      currentDate = new Date(
+        parseInt(year),
+        parseInt(month) - 1,
+        parseInt(day),
+      );
+    }
+  }
+
+  // The useHabitData hook provides getHabitStatus for currentDate, and 'data' object.
+  const { updateHabit, getHabitStatus, data } = useHabitData(currentDate);
+
+  const dailyScore = getDailyScore(data, currentDate);
+  const weeklyScore = getWeeklyScore(data, currentDate);
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
       const tomorrow = new Date(currentDate);
       tomorrow.setDate(tomorrow.getDate() + 1);
       if (tomorrow <= new Date()) {
-        setCurrentDate(tomorrow);
+        const dateString = tomorrow.toLocaleDateString("en-CA");
+        navigate(`/day/${dateString}`);
       }
     },
     onSwipedRight: () => {
       const yesterday = new Date(currentDate);
       yesterday.setDate(yesterday.getDate() - 1);
-      setCurrentDate(yesterday);
+      const dateString = yesterday.toLocaleDateString("en-CA");
+      navigate(`/day/${dateString}`);
     },
     trackMouse: true,
   });
@@ -46,8 +59,19 @@ function DailyTracker() {
         {isToday && <span>(今天)</span>}
       </header>
 
+      <div className="score-board">
+        <div className="score-card">
+          <span>今日积分</span>
+          <strong>{dailyScore}</strong>
+        </div>
+        <div className="score-card">
+          <span>本周累计积分</span>
+          <strong>{weeklyScore}</strong>
+        </div>
+      </div>
+
       <div className="habit-list">
-        {habits.map((habit) => (
+        {HABITS.map((habit) => (
           <button
             key={habit.id}
             onClick={() => updateHabit(habit.id, !getHabitStatus(habit.id))}
