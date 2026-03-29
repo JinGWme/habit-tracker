@@ -2,7 +2,7 @@ import { HabitData } from "../hooks/useHabitData";
 import { HABITS } from "../constants/habits";
 
 export function getDailyScore(data: HabitData, date: Date): number {
-  const dateString = date.toISOString().split("T")[0];
+  const dateString = date.toLocaleDateString("en-CA");
   const dayData = data[dateString] || {};
 
   let completedCount = 0;

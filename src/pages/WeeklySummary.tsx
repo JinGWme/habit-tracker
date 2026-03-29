@@ -15,7 +15,7 @@ function WeeklySummary() {
     for (let i = 0; i < 7; i++) {
       const d = new Date(currentDate);
       d.setDate(d.getDate() - i);
-      const dateString = d.toISOString().split("T")[0];
+      const dateString = d.toLocaleDateString("en-CA");
       if (data[dateString]?.[habit.id]) {
         count++;
       }

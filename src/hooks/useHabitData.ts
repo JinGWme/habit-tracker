@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-const HABIT_DATA_KEY = 'habit-tracker-data';
+const HABIT_DATA_KEY = "habit-tracker-data";
 
 export interface HabitData {
   [date: string]: {
@@ -11,7 +11,7 @@ export interface HabitData {
 export function useHabitData(date: Date) {
   const [data, setData] = useState<HabitData>({});
 
-  const dateString = date.toISOString().split('T')[0];
+  const dateString = date.toLocaleDateString("en-CA");
 
   useEffect(() => {
     const storedData = localStorage.getItem(HABIT_DATA_KEY);
@@ -36,10 +36,5 @@ export function useHabitData(date: Date) {
     return data[dateString]?.[habitId] ?? false;
   };
 
-  const getDayData = (d: Date) => {
-    const ds = d.toISOString().split('T')[0];
-    return data[ds] ?? {};
-  }
-
-  return { updateHabit, getHabitStatus, getDayData, data };
+  return { updateHabit, getHabitStatus, data };
 }
