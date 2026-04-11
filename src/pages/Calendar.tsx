@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useHabitData } from "../hooks/useHabitData";
+import { useHabitData, formatDate } from "../hooks/useHabitData";
 import { HABITS } from "../constants/habits";
 import "./Calendar.css";
 
@@ -47,14 +47,14 @@ function Calendar() {
   };
 
   const handleDayClick = (day: Date) => {
-    // Format YYYY-MM-DD local time correctly
-    const dateString = day.toLocaleDateString("en-CA"); // YYYY-MM-DD
+    // Format YYYY-MM-DD correctly
+    const dateString = formatDate(day);
     navigate(`/day/${dateString}`);
   };
 
   const getCompletionClass = (day: Date | null) => {
     if (!day) return "";
-    const dateString = day.toLocaleDateString("en-CA");
+    const dateString = formatDate(day);
     const dayData = data[dateString];
     if (!dayData) return "completion-0";
 

@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useHabitData } from "../hooks/useHabitData";
+import { useHabitData, formatDate } from "../hooks/useHabitData";
 import { useSwipeable } from "react-swipeable";
 import { HABITS } from "../constants/habits";
 import { getDailyScore, getWeeklyScore } from "../utils/scoring";
@@ -32,14 +32,14 @@ function DailyTracker() {
       const tomorrow = new Date(currentDate);
       tomorrow.setDate(tomorrow.getDate() + 1);
       if (tomorrow <= new Date()) {
-        const dateString = tomorrow.toLocaleDateString("en-CA");
+        const dateString = formatDate(tomorrow);
         navigate(`/day/${dateString}`);
       }
     },
     onSwipedRight: () => {
       const yesterday = new Date(currentDate);
       yesterday.setDate(yesterday.getDate() - 1);
-      const dateString = yesterday.toLocaleDateString("en-CA");
+      const dateString = formatDate(yesterday);
       navigate(`/day/${dateString}`);
     },
     trackMouse: true,

@@ -1,4 +1,5 @@
 import { NavLink, Link, Outlet, useLocation } from "react-router-dom";
+import { formatDate } from "../hooks/useHabitData";
 import "./Layout.css";
 
 function Layout() {
@@ -16,8 +17,8 @@ function Layout() {
   const nextDay = new Date(currentDate);
   nextDay.setDate(nextDay.getDate() + 1);
 
-  const prevPath = `/day/${prevDay.toLocaleDateString("en-CA")}`;
-  const nextPath = `/day/${nextDay.toLocaleDateString("en-CA")}`;
+  const prevPath = `/day/${formatDate(prevDay)}`;
+  const nextPath = `/day/${formatDate(nextDay)}`;
 
   return (
     <div className="layout">

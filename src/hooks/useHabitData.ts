@@ -9,6 +9,13 @@ export interface HabitData {
   };
 }
 
+export const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 const getMonthKey = (date: Date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -18,7 +25,7 @@ const getMonthKey = (date: Date) => {
 export function useHabitData(date: Date) {
   const [data, setData] = useState<HabitData>({});
 
-  const dateString = date.toLocaleDateString("en-CA");
+  const dateString = formatDate(date);
 
   useEffect(() => {
     // 1. Loading Logic
@@ -52,6 +59,7 @@ export function useHabitData(date: Date) {
     window.addEventListener("storage", loadData);
     return () => window.removeEventListener("storage", loadData);
   }, [date.getFullYear(), date.getMonth()]);
+
   const updateHabit = (habitId: string, completed: boolean) => {
     const mKey = getMonthKey(date);
     const currentMonthData = JSON.parse(localStorage.getItem(mKey) || "{}");

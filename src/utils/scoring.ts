@@ -1,8 +1,8 @@
-import { HabitData } from "../hooks/useHabitData";
+import { HabitData, formatDate } from "../hooks/useHabitData";
 import { HABITS } from "../constants/habits";
 
 export function getDailyScore(data: HabitData, date: Date): number {
-  const dateString = date.toLocaleDateString("en-CA");
+  const dateString = formatDate(date);
   const dayData = data[dateString] || {};
 
   let completedCount = 0;
