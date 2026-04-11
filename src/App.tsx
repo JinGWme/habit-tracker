@@ -1,56 +1,38 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import DailyTracker from "./pages/DailyTracker";
 import WeeklySummary from "./pages/WeeklySummary";
-import Auth from "./pages/Auth";
-
-import ProtectedRoute from "./components/ProtectedRoute";
 
 import Layout from "./components/Layout";
 
 import Calendar from "./pages/Calendar";
 
-const router = createBrowserRouter([
-  {
-    path: "/auth",
-    element: <Auth />,
-  },
+const router = createHashRouter([
   {
     path: "/",
-    element: <ProtectedRoute />,
+    element: <Layout />,
     children: [
       {
-        element: <Layout />,
-        children: [
-          {
-            path: "/",
-            element: <DailyTracker />,
-          },
-          {
-            path: "/day/:date",
-            element: <DailyTracker />,
-          },
-          {
-            path: "/summary",
-            element: <WeeklySummary />,
-          },
-          {
-            path: "/calendar",
-            element: <Calendar />,
-          },
-        ],
+        path: "/",
+        element: <DailyTracker />,
+      },
+      {
+        path: "/day/:date",
+        element: <DailyTracker />,
+      },
+      {
+        path: "/summary",
+        element: <WeeklySummary />,
+      },
+      {
+        path: "/calendar",
+        element: <Calendar />,
       },
     ],
   },
 ]);
 
-import { AuthProvider } from "./context/AuthContext";
-
 function App() {
-  return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
